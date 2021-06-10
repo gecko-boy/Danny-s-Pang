@@ -50,16 +50,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         {
             this.setVelocityX(this.hVelocity);
             this.flipX = false;
-        }
-        //subir rampas
-        else if (this.onRamp && this.controls.up.isDown)
-        {
-            this.setVelocityY(-this.hVelocity);
-        }
+        }        
         //parar no sítio
         else
         {
             this.setVelocityX(0)
+        }
+        //subir rampas
+        if (this.onRamp && this.controls.up.isDown)
+        {
+            this.setVelocityY(-this.hVelocity);
+        }
+        //descer rampas
+        else if (this.onRamp && this.controls.down.isDown)
+        {
+            this.setVelocityY(-this.hVelocity);
         }
 
         //não achamos que havia necessidade de criar uma máquina de estados pelo facto de termos apenas uma animação
