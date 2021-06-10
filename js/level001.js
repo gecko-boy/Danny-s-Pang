@@ -44,11 +44,13 @@ export default class Level001 extends Phaser.Scene
 
     init()
     {
+        //controlos do jogo
         this.controls = this.input.keyboard.createCursorKeys();
     }
 
     create()
     {
+        //criar grupo de física para plataformas e rampas
         this.platforms = this.physics.add.staticGroup(
             {
                 allowGravity: false,
@@ -62,11 +64,14 @@ export default class Level001 extends Phaser.Scene
             }
         );
 
+        //aplicar cenário
         this.add.image(0, 0, "background").setOrigin(0).setScale(1);
 
+        //chamar métodos para posicionar plataformas e rampas
         this.createPlatforms();
         this.createRamps();
 
+        //criar jogador com base na classe
         this.player = new Player(
             this,
             this.game.config.width * 0.5,
@@ -74,12 +79,14 @@ export default class Level001 extends Phaser.Scene
             "player", 0
         ).setScale(1);
 
+        //habilitar overlaps entre player e plataformas/rampas
         this.physics.add.overlap(this.player, this.platforms, this.onPlatform, null, this);
         this.physics.add.overlap(this.player, this.ramps, this.onRamp, null, this);
     }
 
     createPlatforms()
     {
+        //criar plataformas
         levelDataP.forEach(
             data => {
                 let newPlatform = this.add.sprite(data.x, data.y, data.key);
@@ -91,6 +98,7 @@ export default class Level001 extends Phaser.Scene
 
     createRamps()
     {
+        //criar rampas
         levelDataR.forEach(
             data => {
                 let newRamp = this.add.sprite(data.x, data.y, data.key);
@@ -100,6 +108,7 @@ export default class Level001 extends Phaser.Scene
         )
     }
 
+    //chamar métodos de interação com plataformas e rampas da classe do player
     onPlatform(player, platform)
     {
         this.player.setOnPlatform(true);
@@ -112,6 +121,7 @@ export default class Level001 extends Phaser.Scene
 
     update(time)
     {
+        //chamar updates e métodos necessários do player
         this.player.update(time);
         this.player.setOnPlatform(false);
         this.player.setOnRamp(false);
