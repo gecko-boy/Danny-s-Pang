@@ -1,4 +1,5 @@
 import Player from "./player.js"
+import Balls from "./balls.js"
 
 let levelDataP =
 [
@@ -66,9 +67,17 @@ export default class Level001 extends Phaser.Scene
         this.player = new Player(
             this,
             this.game.config.width * 0.5,
-            this.game.config.height * 0.5,
+            this.game.config.height - 200 * 0.5,
             "player", 0
         ).setScale(0.3);
+
+        //criar bolas
+        this.firstBall = new Balls(this, this.game.config.width * 0.2, this.game.config.height * 0.5, "bloodBall", 0);
+        this.secondBall = new Balls(this, this.game.config.width * 0.7, this.game.config.height * 0.6, "bloodBall", 0);
+
+        //física das bolas => colliders
+        this.physics.add.overlap(this.player, this.firstBall, this.secondBall, null, this);
+        this.physics.add.overlap(this.player, this.secondBall, this.secondBall, null, this);
 
         //habilitar overlaps entre player e plataformas/rampas
         this.physics.add.overlap(this.player, this.platforms, this.onPlatform, null, this);
@@ -106,11 +115,21 @@ export default class Level001 extends Phaser.Scene
     {
         this.player.setOnPlatform(true);
     }
-
     onRamp(player, ramp)
     {
-        this.player.setOnRamp(true);
-        
+        this.player.setOnRamp(true);  
+    }
+
+    //chamar métodops de interação com bolas
+    onBall(player, ball)
+    {
+        player.hit();
+        if(!player.isDead())
+        {
+            player.setPosition(this.game.config.width * 0.5, this.game.config.height * 1);
+        } else {
+            this.scene.restart();
+        }
     }
 
     update(time)
