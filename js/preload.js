@@ -17,7 +17,7 @@ export default class Preload extends Phaser.Scene
         this.load.image("bigPlat", "./images/plataformas.png");
         this.load.image("smallPlat", "./images/plataformas2.png");
         //carregar spritesheet do Danny
-        this.load.spritesheet("player", "./images/player_spritesheet",
+        this.load.spritesheet("player", "./images/player_spritesheet.png",
         {
             frameWidth: 317.5,
             frameHeight: 452
