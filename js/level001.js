@@ -38,6 +38,8 @@ export default class Level001 extends Phaser.Scene
     {
         //controlos do jogo
         this.controls = this.input.keyboard.createCursorKeys();
+
+        this.lifeIcons =[];
     }
 
     create()
@@ -72,16 +74,30 @@ export default class Level001 extends Phaser.Scene
         ).setScale(0.3);
 
         //criar bolas
-        this.firstBall = new Balls(this, this.game.config.width * 0.2, this.game.config.height * 0.5, "bloodBall", 0);
-        this.secondBall = new Balls(this, this.game.config.width * 0.7, this.game.config.height * 0.6, "bloodBall", 0);
+        this.firstBall = new Balls(this, this.game.config.width * 0.2, this.game.config.height * 0.5, "glassBall", 0);
+        this.secondBall = new Balls(this, this.game.config.width * 0.7, this.game.config.height * 0.6, "glassBall", 0);
 
         //física das bolas => colliders
-        this.physics.add.overlap(this.player, this.firstBall, this.secondBall, null, this);
-        this.physics.add.overlap(this.player, this.secondBall, this.secondBall, null, this);
+        this.physics.add.overlap(this.player, this.firstBall, this.onBall, null, this);
+        this.physics.add.overlap(this.player, this.secondBall, this.onBall, null, this);
 
         //habilitar overlaps entre player e plataformas/rampas
         this.physics.add.overlap(this.player, this.platforms, this.onPlatform, null, this);
         this.physics.add.overlap(this.player, this.ramps, this.onRamp, null, this);
+
+        //preparar HUD
+        this.hudMaker();
+    }
+
+    hudMaker()
+    {
+        this.lifesRemaining = this.player.lifeGetter();
+
+        for(let i = 0; i < this.lifesRemaining; i++)
+        {
+            //TEMOS QUE MUDAR ÍCONE DE VIDA!!!
+            this.lifeIcons.push(this.add.image(50 + i * 60, 50, "bloodBall").setScale(0.05));
+        }
     }
 
     createPlatforms()
@@ -124,7 +140,7 @@ export default class Level001 extends Phaser.Scene
     onBall(player, ball)
     {
         player.hit();
-        if(!player.isDead())
+        if(!player.Dead())
         {
             player.setPosition(this.game.config.width * 0.5, this.game.config.height * 1);
         } else {
@@ -136,6 +152,13 @@ export default class Level001 extends Phaser.Scene
     {
         //chamar updates e métodos necessários do player
         this.player.update(time);
+
+        //atualizar do hud
+        for(let i = this.lifeIcons.length - 1; i >= this.lifesRemaining; --i)
+        {
+            //MUDAR A TEXTURA
+            this.lifeIcons[i].setTexture("glassBall");
+        }
 
     }
 }

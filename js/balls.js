@@ -20,8 +20,7 @@ export default class Balls extends Phaser.Physics.Arcade.Sprite
             }
         }
         this.setVelocity(
-            Phaser.Math.Between(this.randomDirection.min.x, this.randomDirection.max.x),
-            Phaser.Math.Between(this.randomDirection.min.y, this.randomDirection.max.y)
+            Phaser.Math.Between(this.randomDirection.min.x, this.randomDirection.max.x), Phaser.Math.Between(this.randomDirection.min.y, this.randomDirection.max.y)
         );
     }
 }

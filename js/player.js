@@ -16,6 +16,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         //os inputs
         this.controls = scene.input.keyboard.createCursorKeys();
 
+        //vidas
+        this.life = 3;
+
         //as variáveis boleanas para interagir com as rampas e plataformas
         this.onPlatform = false;
         this.onRamp = false;
@@ -28,7 +31,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
 
     setOnRamp(value)
     {
-        this.OnRamp = value;
+        this.onRamp = value;
     }
 
     update(time)
@@ -64,9 +67,28 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         //descer rampas
         else if (this.onRamp && this.controls.down.isDown)
         {
-            this.setVelocityY(-this.hVelocity);
+            this.setVelocityY(this.hVelocity);
+        }
+        else
+        {
+            this.setVelocityY(0);
         }
 
         //não achamos que havia necessidade de criar uma máquina de estados pelo facto de termos apenas uma animação
+    }
+
+    hit()
+    {
+        this.life--;
+    }
+
+    Dead()
+    {
+        return this.life === 0;
+    }
+
+    lifeGetter()
+    {
+        return this.life;
     }
 }
