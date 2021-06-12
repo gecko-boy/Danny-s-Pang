@@ -93,7 +93,7 @@ export default class Level001 extends Phaser.Scene
 
         //criar bolas
         this.firstBall = new Balls(this, this.game.config.width * 0.2, this.game.config.height * 0.2, "glassBall", 0);
-        this.secondBall = new Balls(this, this.game.config.width * 0.7, this.game.config.height * 0.25, "bloodBall", 0);
+        this.secondBall = new Balls(this, this.game.config.width * 0.7, this.game.config.height * 0.25, "glassBall", 0);
 
         //física das bolas => colliders
         this.physics.add.overlap(this.player, this.firstBall, this.onBall, null, this);
