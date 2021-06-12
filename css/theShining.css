@@ -5,12 +5,13 @@ canvas {
 body {
     background-color: #050505;
     color: red;
-    font-size: 10px;
+    font-size: 5px;
 }
 
 header {
     background-color: rgb(143, 75, 44);
     padding: 20px;
+    text-align: center;
 }
 
 header img {

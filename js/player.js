@@ -45,6 +45,8 @@ class Harpoons extends Phaser.Physics.Arcade.Sprite
     }
 }
 
+//tentámos pôr isto em classes externas exportáveis e importá-las para aqui mas tivemos problemas no chamar de variáveis 
+
 export default class Player extends Phaser.Physics.Arcade.Sprite
 {
     constructor(scene, x, y, texture)
