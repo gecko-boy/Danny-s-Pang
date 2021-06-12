@@ -83,6 +83,7 @@ export default class Level001 extends Phaser.Scene
             "player", 0
         ).setScale(0.3);
 
+        //TEMOS QUE MUDAR TEXTURA DO SEGUNDO JOGADOR!!!
         this.player2 = new Player2(
             this,
             this.game.config.width * 0.6,
@@ -106,8 +107,8 @@ export default class Level001 extends Phaser.Scene
         //habilitar overlaps entre player e plataformas/rampas
         this.physics.add.overlap(this.player, this.platforms, this.onPlatform, null, this);
         this.physics.add.overlap(this.player, this.ramps, this.onRamp, null, this);
-        this.physics.add.overlap(this.player2, this.platforms, this.onPlatform, null, this);
-        this.physics.add.overlap(this.player2, this.ramps, this.onRamp, null, this);
+        this.physics.add.overlap(this.player2, this.platforms, this.onPlatform2, null, this);
+        this.physics.add.overlap(this.player2, this.ramps, this.onRamp2, null, this);
 
         //preparar HUD
         this.hudMaker();
@@ -169,6 +170,14 @@ export default class Level001 extends Phaser.Scene
     {
         this.player.setOnRamp(true);  
     }
+    onPlatform2(player2, platform)
+    {
+        this.player2.setOnPlatform(true);
+    }
+    onRamp2(player2, ramp)
+    {
+        this.player2.setOnRamp(true);  
+    }
 
     //chamar métodops de interação com bolas
     onBall(player, ball)
@@ -200,13 +209,13 @@ export default class Level001 extends Phaser.Scene
         this.player2.update(time);
 
         //atualizar do hud
-        for(let i = this.lifeIcons.length - 1; i >= this.lifesRemaining; --i)
+        for(let i = this.lifeIcons.length - 1; i >= this.player.life; --i)
         {
             //MUDAR A TEXTURA
             this.lifeIcons[i].setTexture("bloodBallBW");
         }
 
-        for(let i = this.lifeIcons2.length - 1; i >= this.lifesRemaining2; i--)
+        for(let i = this.lifeIcons2.length - 1; i >= this.player2.life; i--)
         {
             this.lifeIcons2[i].setTexture("bloodBallBW");
         }
