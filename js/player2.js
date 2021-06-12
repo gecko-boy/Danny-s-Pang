@@ -45,7 +45,7 @@ class Harpoons extends Phaser.Physics.Arcade.Sprite
     }
 }
 
-export default class Player extends Phaser.Physics.Arcade.Sprite
+export default class Player2 extends Phaser.Physics.Arcade.Sprite
 {
     constructor(scene, x, y, texture)
     {
@@ -61,7 +61,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         this.hVelocity = 200;
 
         //os inputs
-        this.controls = scene.input.keyboard.createCursorKeys();
+        this.controls = scene.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            space: Phaser.Input.Keyboard.KeyCodes.G
+        });
 
         //vidas
         this.life = 3;
@@ -145,7 +151,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
 
     shootHarpoon()
     {
-        console.log("shooting1");
+        console.log("shooting 2");
         this.weaponGroup.fireHarpoon(this.player.x, this.player.y - 20);
     }
 

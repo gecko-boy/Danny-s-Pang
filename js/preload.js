@@ -14,7 +14,7 @@ export default class Preload extends Phaser.Scene
         this.load.image("glassBall", "./images/bolas.png");
         this.load.image("bloodBall", "./images/bolas2.png");
         this.load.image("bloodBallBW", "./images/bolas2BW.png");
-        this.load.image("spear", "./images/lança.png");
+        this.load.image("harpoon", "./images/lança.png");
         this.load.image("bigPlat", "./images/plataformas.png");
         this.load.image("smallPlat", "./images/plataformas2.png");
         //carregar spritesheet do Danny
