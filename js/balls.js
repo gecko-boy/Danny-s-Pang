@@ -9,6 +9,14 @@ export default class Balls extends Phaser.Physics.Arcade.Sprite
         this.setCollideWorldBounds(true);
         this.setScale(0.1);
         this.setBounce(1.0);
+
+        this.sizes = {
+            big: 0.1,
+            medium: 0.05,
+            small: 0.015
+        }
+
+        this.currentSize = "big";
         this.randomDirection = {
             min: {
                 x: -100,

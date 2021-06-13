@@ -2,12 +2,17 @@ class Harpoon extends Phaser.Physics.Arcade.Sprite
 {
     constructor(scene, x, y, harpoon)
     {
-        super(scene, x, y, "harpoon")
+        super(scene, x, y, "harpoon");
+        this.setOrigin(0).setScale(0.1);
+        this.scene.add.existing(this);
     }
 
     //método de disparo
     fire(x, y)
     {
+        this.scene.physics.add.existing(this);
+        this.body.allowGravity = false;
+
         //reposicionar o arpão quando disparado
         this.body.reset(x, y);
 
@@ -24,7 +29,7 @@ class Harpoons extends Phaser.Physics.Arcade.Sprite
 {
     constructor(scene)
     {
-        super(scene.physics.world, scene);
+        super(scene, scene);
 
         this.createMultiple({
             classType: Harpoon,
@@ -73,7 +78,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         this.onRamp = false;
 
         this.weaponGroup;
+        //this.create();
+
+        this.harp = new Harpoon(this.scene, this.x, this.y - 20);
+        this.harp.x = this.scene.game.config.width + 20;
+        this.harp.y = - 20;
+        this.canShoot = true;
     }
+
+
 
     preload()
     {
@@ -82,7 +95,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
 
     create()
     {
-        this.laserGroup = new this.Harpoons(this);
+        this.weaponGroup = new Harpoons(this.scene);
     }
 
     setOnPlatform(value)
@@ -97,6 +110,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
 
     update(time)
     {
+        if(this.harp.y <= 0)
+        {
+            this.canShoot = true;
+        } else {
+            this.canShoot = false;
+        }
+
+
         //tocar a animação
         this.anims.play("cycling");
 
@@ -122,7 +143,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         }
 
         //shooting harpoon
-        if (this.controls.space.isDown)
+        if (this.controls.space.isDown && this.canShoot)
         {
             this.shootHarpoon();
         }
@@ -147,8 +168,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
 
     shootHarpoon()
     {
-        console.log("shooting1");
-        this.weaponGroup.fireHarpoon(this.player.x, this.player.y - 20);
+        //console.log(this.weaponGroup);
+        //this.weaponGroup.fireHarpoon(this.player.x, this.player.y - 20);
+        //let harp = new Harpoon(this.scene, this.x, this.y - 20);
+        this.harp.fire(this.x, this.y - 20);
     }
 
     //o que acontece quando é atingido pelas bolas

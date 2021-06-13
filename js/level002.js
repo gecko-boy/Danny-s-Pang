@@ -36,11 +36,11 @@ let levelDataR =
     }
 ]
 
-export default class Level001 extends Phaser.Scene
+export default class Level002 extends Phaser.Scene
 {
     constructor()
     {
-        super ("Level001");
+        super ("Level002");
     }
 
     init()
@@ -81,7 +81,7 @@ export default class Level001 extends Phaser.Scene
         this.balls = [];
 
         //aplicar cenário
-        this.add.image(0, 0, "level1").setOrigin(0).setScale(1);
+        this.add.image(0, 0, "level2").setOrigin(0).setScale(1);
 
         //chamar métodos para posicionar plataformas e rampas
         this.createPlatforms();
@@ -273,10 +273,10 @@ export default class Level001 extends Phaser.Scene
 
     update(time)
     {
-        //debug para o professor avaliar
-        if(this.debugKeys.level3.isDown)
+        //debugs passar de nível
+        if(this.debugKeys.level1.isDown)
         {
-            this.scene.start("Level003");
+            this.scene.start("Level001");
         }
         else if (this.debugKeys.victory.isDown)
         {
@@ -284,9 +284,9 @@ export default class Level001 extends Phaser.Scene
         }
 
         //passar de nível
-        if(this.ballAmount <= 0 || this.debugKeys.level2.isDown)
+        if(this.ballAmount <= 0 || this.debugKeys.level3.isDown)
         {
-            this.scene.start("Level002");
+            this.scene.start("Level003");
         }
 
         //chamar updates e métodos necessários do player
